@@ -1,4 +1,4 @@
-package server_test
+package main
 
 import (
   "html/template"

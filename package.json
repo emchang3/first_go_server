@@ -1,0 +1,22 @@
+{
+  "name": "go_server",
+  "version": "1.0.0",
+  "description": "First Go server.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emchang3/first_go_server.git"
+  },
+  "author": "EMC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emchang3/first_go_server/issues"
+  },
+  "homepage": "https://github.com/emchang3/first_go_server#readme",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
