@@ -1,3 +1,7 @@
 # Executable
 
 go_server
+
+# Node Modules
+
+node_modules
