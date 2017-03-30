@@ -1,7 +1,7 @@
 package main
 
 import (
-  // "fmt"
+  "fmt"
   "log"
   "net/http"
 )
@@ -16,5 +16,8 @@ func routeHandler()  {
 func main() {
   routeHandler()
 
-  log.Fatal(http.ListenAndServe(":8080", nil))
+  port := ":8080"
+
+  log.Fatal(http.ListenAndServe(port, nil))
+  fmt.Printf("--- Listening on %v.\n", port)
 }

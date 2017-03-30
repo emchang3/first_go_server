@@ -8,9 +8,11 @@
   </head>
   <body>
     <h1>{{ .Title }}</h1>
-    <p>
-      {{ printf "%s" .Body }}
-    </p>
+    {{ range $index, $element := .Body }}
+      <p>
+        {{ $element }}
+      </p>
+    {{ end }}
     {{ template "pan" }}
   </body>
 </html>
