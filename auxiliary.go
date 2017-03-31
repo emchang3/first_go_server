@@ -2,7 +2,9 @@ package main
 
 import (
   "fmt"
+  "html/template"
   "io/ioutil"
+  "net/http"
   "strings"
 )
 
@@ -11,12 +13,12 @@ type Page struct {
   Body []string
 }
 
-func loadPage(title string) (*Page, error) {
-  filename := "content/" + title + ".txt"
+func loadTextPost(file string, title string, w http.ResponseWriter, r *http.Request) error {
+  filename := "content/" + file + ".txt"
 
   raw, err := ioutil.ReadFile(filename)
   if err != nil {
-      return nil, err
+    return err
   }
 
   myBody := fmt.Sprintf("%s", raw)
@@ -29,5 +31,13 @@ func loadPage(title string) (*Page, error) {
     }
   }
 
-  return &Page{Title: title, Body: body}, nil
+  p := &Page{Title: title, Body: body}
+
+  t, err := template.ParseFiles("views/index.gohtml", "views/partials/content.gohtml")
+  if err != nil {
+    return err
+  }
+
+  t.Execute(w, p)
+  return nil
 }

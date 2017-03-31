@@ -4,15 +4,14 @@
     <meta charset="utf-8">
     <title>{{ .Title }}</title>
 
+    <link rel="stylesheet" href="public/styles/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="public/styles/base.css">
   </head>
   <body>
-    <h1>{{ .Title }}</h1>
-    {{ range $index, $element := .Body }}
-      <p>
-        {{ $element }}
-      </p>
-    {{ end }}
-    {{ template "pan" }}
+    <div id="main">
+      {{ template "content" . }}
+    </div>
+    <script type="text/javascript" src="public/scripts/material.min.js"></script>
   </body>
 </html>

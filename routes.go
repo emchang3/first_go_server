@@ -1,7 +1,6 @@
 package main
 
 import (
-  "html/template"
   "net/http"
 )
 
@@ -11,17 +10,9 @@ func index(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  p, err := loadPage("test")
+  err := loadTextPost("first", "je ne sais quoi", w, r)
   if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
-
-  t, err := template.ParseFiles("views/index.gohtml", "views/partials/something.gohtml")
-  if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
-
-  t.Execute(w, p)
 }

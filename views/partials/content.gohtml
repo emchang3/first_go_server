@@ -1,0 +1,10 @@
+{{ define "content" }}
+  <div class="content mdl-shadow--2dp">
+    <h1>{{ .Title }}</h1>
+    {{ range $index, $element := .Body }}
+      <p>
+        {{ $element }}
+      </p>
+    {{ end }}
+  </div>
+{{ end }}
