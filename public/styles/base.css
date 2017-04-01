@@ -53,10 +53,17 @@ p {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  margin: 100px;
+  margin-bottom: 100px;
   max-width: 500px;
   overflow-y: visible;
   padding: 8px 24px 8px 24px;
+  width: 100%;
+}
+
+#header {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 50px;
   width: 100%;
 }
 

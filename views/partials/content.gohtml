@@ -1,57 +1,17 @@
 {{ define "content" }}
-  <div class="content mdl-shadow--2dp">
-    <h1>{{ .Title }}</h1>
+  <div class="content">
+    <h2 style="border-bottom: 1px solid black;">{{ .Title }}</h2>
     {{ range $element := .Body }}
       {{ $words := call $.Split $element " " }}
       {{ $test := index $words 0 }}
-      {{ if eq $test "#" }}
-        <h1>
+      {{ if eq $test "#" "##" "###" "####" "#####" "######" }}
+        <h{{ len $test }}>
           {{ range $i, $w := $words }}
             {{ if ge $i 1 }}
               {{ $w }}
             {{ end }}
           {{ end }}
-        </h1>
-      {{ else if eq $test "##" }}
-        <h2>
-          {{ range $i, $w := $words }}
-            {{ if ge $i 1 }}
-              {{ $w }}
-            {{ end }}
-          {{ end }}
-        </h2>
-      {{ else if eq $test "###" }}
-        <h3>
-          {{ range $i, $w := $words }}
-            {{ if ge $i 1 }}
-              {{ $w }}
-            {{ end }}
-          {{ end }}
-        </h3>
-      {{ else if eq $test "####" }}
-        <h4>
-          {{ range $i, $w := $words }}
-            {{ if ge $i 1 }}
-              {{ $w }}
-            {{ end }}
-          {{ end }}
-        </h4>
-      {{ else if eq $test "#####" }}
-        <h5>
-          {{ range $i, $w := $words }}
-            {{ if ge $i 1 }}
-              {{ $w }}
-            {{ end }}
-          {{ end }}
-        </h5>
-      {{ else if eq $test "######" }}
-        <h6>
-          {{ range $i, $w := $words }}
-            {{ if ge $i 1 }}
-              {{ $w }}
-            {{ end }}
-          {{ end }}
-        </h6>
+        </h{{ len $test }}>
       {{ else }}
         <p>{{ $element }}</p>
       {{ end }}
