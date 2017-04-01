@@ -11,6 +11,7 @@ import (
 type Page struct {
   Title string
   Body []string
+  Split func(string, string) []string
 }
 
 func loadTextPost(file string, title string, w http.ResponseWriter, r *http.Request) error {
@@ -31,7 +32,7 @@ func loadTextPost(file string, title string, w http.ResponseWriter, r *http.Requ
     }
   }
 
-  p := &Page{Title: title, Body: body}
+  p := &Page{Title: title, Body: body, Split: strings.Split}
 
   t, err := template.ParseFiles("views/index.gohtml", "views/partials/content.gohtml")
   if err != nil {
