@@ -2,6 +2,7 @@ package main
 
 import (
   "fmt"
+  "github.com/joho/godotenv"
   "log"
   "net/http"
   "os"
@@ -25,6 +26,11 @@ func routeHandler() {
 }
 
 func main() {
+  err := godotenv.Load()
+  if err != nil {
+    log.Fatal("Error loading .env file")
+  }
+  
   routeHandler()
 
   port := getPort()
