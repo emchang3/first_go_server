@@ -2,5 +2,11 @@
 	"ImportPath": "go_server",
 	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
-	"Deps": []
+	"Deps": [
+		{
+			"ImportPath": "github.com/joho/godotenv",
+			"Comment": "v1.1-12-g325433c",
+			"Rev": "325433c502d409f3c3dc820098fb0cfe38d98dc7"
+		}
+	]
 }
