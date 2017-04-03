@@ -34,7 +34,7 @@ func loadTextPost(file string, title string, w http.ResponseWriter, r *http.Requ
 
   p := &Page{Title: title, Body: body, Split: strings.Split}
 
-  t, err := template.ParseFiles("views/index.gohtml", "views/partials/content.gohtml")
+  t, err := template.ParseFiles("views/index.gohtml", "views/partials/content.gohtml", "views/partials/menuButton.gohtml")
   if err != nil {
     return err
   }
