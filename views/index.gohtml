@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{{ .Title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>jnsq: {{ .Title }}</title>
 
     <link rel="stylesheet" href="public/styles/material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -11,7 +13,7 @@
   <body>
     <div id="header">
       {{ template "menuButton" . }}
-      <h1 style="border-bottom: 1px solid black;">jnsq</h1>
+      <h1>jnsq</h1>
     </div>
     <div id="main">
       {{ template "content" . }}

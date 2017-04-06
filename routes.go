@@ -10,7 +10,7 @@ func index(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  err := loadTextPost("first", "je ne sais quoi", w, r)
+  err := loadTextPost("1", w, r)
   if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
