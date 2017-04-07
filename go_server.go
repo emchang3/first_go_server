@@ -5,6 +5,7 @@ import (
   "github.com/joho/godotenv"
   "log"
   "net/http"
+  // "net/url"
   "os"
 )
 
@@ -23,6 +24,7 @@ func routeHandler() {
   http.Handle("/public/", http.StripPrefix("/public/", fs))
 
   http.HandleFunc("/", index)
+  http.HandleFunc("/post/", textPost)
 }
 
 func main() {
@@ -30,7 +32,7 @@ func main() {
   if err != nil {
     log.Fatal("Error loading .env file")
   }
-  
+
   routeHandler()
 
   port := getPort()

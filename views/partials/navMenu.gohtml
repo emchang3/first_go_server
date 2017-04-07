@@ -1,0 +1,11 @@
+{{ define "navMenu" }}
+  <div class="nav-menu-closed mdl-shadow--2dp" id="nav-menu">
+    {{ range $page := .Pages }}
+      <p>
+        <a class="classy-link" href="/post/{{ $page.File }}" style="display: none;">
+          {{ $page.Title }}
+        </a>
+      </p>
+    {{ end }}
+  </div>
+{{ end }}

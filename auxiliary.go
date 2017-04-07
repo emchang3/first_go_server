@@ -9,18 +9,23 @@ import (
   "strings"
 )
 
+type Link struct {
+  Title string
+  File string
+}
+
 type Page struct {
   Title string
   Body []string
+  Pages []Link
   Split func(string, string) []string
 }
 
-func getLatestFile() (int, []int, error) {
-  var files []int
+func getLatestFile() (int, error) {
   dirname := "content"
   contents, err := ioutil.ReadDir(dirname)
   if err != nil {
-    return -1, files, err
+    return -1, err
   }
 
   latest := 0
@@ -28,34 +33,31 @@ func getLatestFile() (int, []int, error) {
     prefixString := strings.Split(file.Name(), ".")[0]
     prefixInt, err := strconv.Atoi(prefixString)
     if err != nil {
-      return -1, files, err
+      return -1, err
     }
-    files = append(files, prefixInt)
 
 		if prefixInt > latest {
 		  latest = prefixInt
 		}
 	}
 
-  // fmt.Println(files)
-
-  return latest, files, nil
+  return latest, nil
 }
 
-func loadTextPost(file string, w http.ResponseWriter, r *http.Request) error {
-  filename := "content/" + file + ".txt"
+func getPost(file int) (string, []string, error) {
+  myFile := strconv.Itoa(file)
+  filename := "content/" + myFile + ".txt"
+
+  body := make([]string, 0)
 
   raw, err := ioutil.ReadFile(filename)
   if err != nil {
-    return err
+    return "", body, err
   }
-
-  getLatestFile()
 
   myBody := fmt.Sprintf("%s", raw)
   bodySplit := strings.Split(myBody, "\n")
 
-  body := make([]string, 0)
   title := ""
   for _, v := range bodySplit {
     if strings.Split(v, " ")[0] == "//" {
@@ -67,9 +69,42 @@ func loadTextPost(file string, w http.ResponseWriter, r *http.Request) error {
     }
   }
 
-  p := &Page{Title: title, Body: body, Split: strings.Split}
+  return title, body, err
+}
 
-  t, err := template.ParseFiles("views/index.gohtml", "views/partials/content.gohtml", "views/partials/menuButton.gohtml")
+func loadTextPost(file int, latest int, w http.ResponseWriter, r *http.Request, isIndex bool) error {
+  // fmt.Println(file, latest)
+
+  title, body, err := getPost(file)
+  if err != nil {
+    return err
+  }
+
+  pages := make([]Link, 0)
+  current := latest
+	for current > 0 {
+    currentTitle, _, err := getPost(current)
+    if err != nil {
+      return err
+    }
+    // fmt.Println(currentTitle)
+
+    currentLink := Link{Title: currentTitle, File: strconv.Itoa(current)}
+    pages = append(pages, currentLink)
+		current -= 1
+	}
+  // fmt.Println(pages)
+
+  p := &Page{Title: title, Body: body, Pages: pages, Split: strings.Split}
+
+  tmplt := ""
+  if isIndex {
+    tmplt = "views/index.gohtml"
+  } else {
+    tmplt = "views/post.gohtml"
+  }
+
+  t, err := template.ParseFiles(tmplt, "views/partials/content.gohtml", "views/partials/menuButton.gohtml", "views/partials/navMenu.gohtml")
   if err != nil {
     return err
   }
