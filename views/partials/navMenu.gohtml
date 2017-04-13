@@ -2,7 +2,7 @@
   <div class="nav-menu-closed mdl-shadow--2dp" id="nav-menu">
     {{ range $page := .Pages }}
       <p>
-        <a class="classy-link" href="/post/{{ $page.File }}" style="display: none;">
+        <a href="/post/{{ $page.File }}">
           {{ $page.Title }}
         </a>
       </p>

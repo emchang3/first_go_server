@@ -1,3 +1,5 @@
+#!/usr/local/bin/dash
+
 go build
 echo $?
 

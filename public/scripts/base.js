@@ -1,23 +1,6 @@
 var menuOpen = false;
 
-var classyLinks = document.getElementsByClassName('classy-link');
 var nav = document.getElementById('nav-menu');
-
-nav.addEventListener('transitionend', showLinks);
-
-function showLinks() {
-  if (menuOpen) {
-    for (var i = 0; i < classyLinks.length; i++) {
-      classyLinks[i].style = "display: inline;";
-    }
-  }
-}
-
-function hideLinks() {
-  for (var i = 0; i < classyLinks.length; i++) {
-    classyLinks[i].style = "display: none;";
-  }
-}
 
 function menuButtonClick() {
   var bottom = document.getElementById('menu-bottom');
@@ -26,7 +9,6 @@ function menuButtonClick() {
   var top = document.getElementById('menu-top');
 
   if (menuOpen) {
-    hideLinks();
     bottom.className = 'menu-bottom-bar menu-bar-flat';
     middle.className = 'menu-middle-bar';
     top.className = 'menu-top-bar menu-bar-flat';

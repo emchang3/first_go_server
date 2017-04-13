@@ -1,3 +1,5 @@
+#!/usr/local/bin/dash
+
 ps | grep "go" | while read -r line ; do
   name=$(echo $line | awk '{ print $4 }')
   if [ $name = "./go_server" ]
