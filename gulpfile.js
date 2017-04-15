@@ -3,38 +3,52 @@ const execFile = require('child_process').execFile;
 
 const goFiles = './*.go';
 
-const restartServer = () => {
-	execFile(`${__dirname}/restart_server.sh`, (error, stdout, stderr) => {
-		if (error) {
-			console.error(error);
-		}
-		else {
-			if (stdout.length > 0) console.log(stdout);
-			if (stderr) console.log(stderr);
-		}
-	});
-}
+const start = () => execFile(`${__dirname}/shell_ops.sh`, [ 3 ]);
 
-const build = () => {
-	execFile(`${__dirname}/build.sh`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(error);
-    } else {
-      if (stdout.length > 0) {
+const started = () => execFile(
+	`${__dirname}/shell_ops.sh`,
+	[ 4 ],
+	(error, stdout, stderr) => {
+		if (stdout.length > 0) console.log(stdout);
+		if (stderr) console.log('rsd_stderr:', stderr);
+	}
+);
+
+const build = () => execFile(
+	`${__dirname}/shell_ops.sh`,
+	[ 2 ],
+	(error, stdout, stderr) => {
+		if (error) {
+			console.error('b_error', error);
+		} else {
+			if (stdout.length > 0) {
 				const buildStatus = stdout.split('')[0];
 				if (buildStatus === '0') {
-					restartServer();
+					console.log('--- BUILD SUCCESSFUL ---');
+					start();
+					started();
 				}
 				else {
-					if (stderr) console.log(stderr);
+					if (stderr) console.log('b_stderr', stderr);
 				}
 			}
-    }
-  });
+		}
+	}
+);
+
+gulp.task('build', [ 'destroy' ], build);
+
+const destroy = () => {
+	execFile(
+		`${__dirname}/shell_ops.sh`,
+		[ 1 ],
+		(error, stdout, stderr) => {
+			if (stdout.length > 0) console.log(stdout);
+			if (stderr) console.log('rs_stderr:', stderr);
+		}
+	);
 }
 
-gulp.task('build', build);
+gulp.task('destroy', destroy);
 
-gulp.task('default', [ 'build' ], () => {
-	gulp.watch(goFiles, [ 'build' ]);
-});
+gulp.task('default', [ 'build' ], () => gulp.watch(goFiles, [ 'build' ]));
