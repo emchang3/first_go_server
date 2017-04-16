@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/emchang3/first_go_server#readme",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "gulp": "^3.9.1",
     "material-design-lite": "^1.3.0"
   }

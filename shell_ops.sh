@@ -6,9 +6,9 @@ destroy() {
   if [ $gostatus = "0" ]
   then
     kill $gopid
-    echo "--- KILLED: $gopid ---"
+    echo $gopid
   else
-    echo "--- NO GO INSTANCE ---"
+    echo "NOGO"
   fi
 }
 
@@ -26,7 +26,9 @@ started() {
   gostatus=$?
   if [ $gostatus = "0" ]
   then
-    echo "--- STARTED: $(pgrep "go_server") ---"
+    echo $gopid
+  else
+    echo "NOGO"
   fi
 }
 
