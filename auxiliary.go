@@ -46,7 +46,7 @@ func getLatestFile() (int, error) {
 
 func getPost(file int) (string, []string, error) {
   myFile := strconv.Itoa(file)
-  filename := "content/" + myFile + ".txt"
+  filename := "content/" + myFile + ".emc"
 
   body := make([]string, 0)
 
@@ -60,7 +60,7 @@ func getPost(file int) (string, []string, error) {
 
   title := ""
   for _, v := range bodySplit {
-    if strings.Split(v, " ")[0] == "//" {
+    if strings.Split(v, " ")[0] == "^t" {
       title = strings.Join(strings.Split(v, " ")[1:], " ")
       continue
     }

@@ -60,6 +60,15 @@ a:hover {
 }
 
 /* views/partials/content.gohtml */
+.code {
+  font-family: Courier;
+}
+
+.code-block {
+  background-color: #EEEEEE;
+  padding: 8px 12px 0px 12px;
+}
+
 .content {
   align-items: flex-start;
   display: flex;

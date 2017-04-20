@@ -9,3 +9,8 @@ content
 
 # Environment Variables
 .env
+
+# Material
+
+material.min.js
+material.min.css

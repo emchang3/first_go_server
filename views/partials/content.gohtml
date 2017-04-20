@@ -3,18 +3,40 @@
     <h2 style="border-bottom: 1px solid black;">{{ .Title }}</h2>
     {{ range $element := .Body }}
       {{ $words := call $.Split $element " " }}
-      {{ $test := index $words 0 }}
-      {{ if eq $test "#" "##" "###" "####" "#####" "######" }}
-        <h{{ len $test }}>
-          {{ range $i, $w := $words }}
-            {{ if ge $i 1 }}
-              {{ $w }}
+
+      {{ $firstWord := index $words 0 }}
+      {{ if eq $firstWord "^1" "^2" "^3" "^4" "^5" "^6" }}
+        {{ $number := index (call $.Split $firstWord "") 1 }}
+        <h{{ $number }}>
+          {{ range $i, $word := $words }}
+            {{ if gt $i 0 }}
+              {{ $word }}
             {{ end }}
           {{ end }}
-        </h{{ len $test }}>
+        </h{{ $number }}>
+      {{ else if eq $firstWord "^cb" }}
+        <div class="code code-block">
+      {{ else if eq $firstWord "cb$" }}
+        </div>
       {{ else }}
-        <p>{{ $element }}</p>
+        {{ $musplit := call $.Split $element "`" }}
+        <p>
+          {{ range $i, $word := $musplit }}
+            {{ if eq $word "^c" }}<code>
+            {{ else if eq $word "c$" }}</code>
+            {{ else if eq $word "^e" }}<em>
+            {{ else if eq $word "e$" }}</em>
+            {{ else if eq $word "^s" }}<strong>
+            {{ else if eq $word "s$" }}</strong>
+            {{ else }}
+              {{ if ne $word "" }}
+                {{ $word }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        </p>
       {{ end }}
+
     {{ end }}
   </div>
 {{ end }}
