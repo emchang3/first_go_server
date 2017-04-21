@@ -24,7 +24,7 @@ func routeHandler() {
   http.Handle("/public/", http.StripPrefix("/public/", fs))
 
   http.HandleFunc("/", index)
-  http.HandleFunc("/post/", textPost)
+  http.HandleFunc("/post/", contentPost)
 }
 
 func main() {

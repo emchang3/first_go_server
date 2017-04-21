@@ -18,14 +18,14 @@ func index(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  err = loadTextPost(file, file, w, r, true)
+  err = loadContentPost(file, file, w, r, true)
   if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return
   }
 }
 
-func textPost(w http.ResponseWriter, r *http.Request) {
+func contentPost(w http.ResponseWriter, r *http.Request) {
   secondary := strings.Split(r.URL.Path, "/")[2]
   this, err := strconv.Atoi(secondary)
   if err != nil {
@@ -39,7 +39,7 @@ func textPost(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  err = loadTextPost(this, file, w, r, false)
+  err = loadContentPost(this, file, w, r, false)
   if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
     return

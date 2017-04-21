@@ -72,7 +72,7 @@ func getPost(file int) (string, []string, error) {
   return title, body, err
 }
 
-func loadTextPost(file int, latest int, w http.ResponseWriter, r *http.Request, isIndex bool) error {
+func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Request, isIndex bool) error {
   // fmt.Println(file, latest)
 
   title, body, err := getPost(file)

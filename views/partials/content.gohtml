@@ -28,6 +28,15 @@
             {{ else if eq $word "e$" }}</em>
             {{ else if eq $word "^s" }}<strong>
             {{ else if eq $word "s$" }}</strong>
+            {{ else if eq $word "^c-r" }}<span class="red">
+            {{ else if eq $word "c-r$" }}</span>
+            {{ else if eq $word "^c-t" }}<span class="teal">
+            {{ else if eq $word "c-t$" }}</span>
+            {{ else if eq $word "^c-i" }}<span class="indigo">
+            {{ else if eq $word "c-i$" }}</span>
+            {{ else if eq $word "^c-g" }}<span class="grey">
+            {{ else if eq $word "c-g$" }}</span>
+            {{ else if eq $word "n$" }}<br />
             {{ else }}
               {{ if ne $word "" }}
                 {{ $word }}
