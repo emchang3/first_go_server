@@ -6,18 +6,7 @@ import (
   "log"
   "net/http"
   // "net/url"
-  "os"
 )
-
-func getPort() string {
-  port := os.Getenv("PORT")
-
-  if port == "" {
-    return ":8080"
-  }
-
-  return fmt.Sprintf(":%v", port)
-}
 
 func routeHandler() {
   fs := http.FileServer(http.Dir("public"))
@@ -25,6 +14,7 @@ func routeHandler() {
 
   http.HandleFunc("/", index)
   http.HandleFunc("/post/", contentPost)
+  http.HandleFunc("/submit", receiveContent)
 }
 
 func main() {
