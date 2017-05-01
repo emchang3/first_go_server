@@ -66,8 +66,14 @@ func receiveContent(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  body, err1 := ioutil.ReadAll(r.Body)
-  if err1 != nil {
+  filename := r.Header["Filename"]
+  if filename == nil {
+    http.Error(w, "Invalid filename.", http.StatusInternalServerError)
+    return
+  }
+
+  body, err := ioutil.ReadAll(r.Body)
+  if err != nil {
     http.Error(w, "Error reading request body.", http.StatusInternalServerError)
     return
   }
@@ -75,10 +81,14 @@ func receiveContent(w http.ResponseWriter, r *http.Request) {
   mb := fmt.Sprintf("%s", body)
   bytes := []byte(mb)
 
-  err2 := ioutil.WriteFile("content/test.emc", bytes, 0644)
-  if err2 != nil {
-    fmt.Println(err2)
+  file := fmt.Sprintf("content/%v.emc", filename[0])
+
+  err = ioutil.WriteFile(file, bytes, 0644)
+  if err != nil {
+    fmt.Println(err)
     http.Error(w, "Error writing request body.", http.StatusInternalServerError)
     return
   }
+
+  w.WriteHeader(http.StatusCreated)
 }
