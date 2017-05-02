@@ -5,10 +5,12 @@ const execFile = require('child_process').execFile;
 
 const goFiles = './*.go';
 
-const start = () => execFile(`${__dirname}/shell_ops.sh`, [ 3 ]);
+const platform = process.platform === 'darwin' ? 'osx' : 'ubuntu'
+
+const start = () => execFile(`${__dirname}/shell_ops_${platform}.sh`, [ 3 ]);
 
 const started = () => execFile(
-	`${__dirname}/shell_ops.sh`,
+	`${__dirname}/shell_ops_${platform}.sh`,
 	[ 4 ],
 	(error, stdout, stderr) => {
 		if (stdout.length > 0) {
@@ -23,7 +25,7 @@ const started = () => execFile(
 
 
 const build = () => execFile(
-	`${__dirname}/shell_ops.sh`,
+	`${__dirname}/shell_ops_${platform}.sh`,
 	[ 2 ],
 	(error, stdout, stderr) => {
 		if (error) {
@@ -46,7 +48,7 @@ gulp.task('build', [ 'destroy' ], build);
 
 const destroy = () => {
 	execFile(
-		`${__dirname}/shell_ops.sh`,
+		`${__dirname}/shell_ops_${platform}.sh`,
 		[ 1 ],
 		(error, stdout, stderr) => {
 			if (stdout.length > 0) {
