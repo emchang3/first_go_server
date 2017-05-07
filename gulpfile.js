@@ -1,8 +1,14 @@
 require('dotenv').load();
 
-const gulp = require('gulp');
 const execFile = require('child_process').execFile;
 
+const gulp = require('gulp');
+const uglify = require('gulp-uglify');
+const pump = require('pump');
+
+const src = `${__dirname}/src`;
+const intermediate = `${__dirname}/intermediate`;
+const dest = `${__dirname}/public/scripts`;
 const goFiles = './*.go';
 
 const platform = process.platform === 'darwin' ? 'osx' : 'ubuntu'
@@ -66,4 +72,32 @@ const destroy = () => {
 
 gulp.task('destroy', destroy);
 
-gulp.task('default', [ 'build' ], () => gulp.watch(goFiles, [ 'build' ]));
+const cleanup = () => execFile(`${__dirname}/removeIntermediate.sh`, [ intermediate ]);
+
+const minify = () => pump(
+  [
+    gulp.src(`${intermediate}/*.js`),
+    uglify(),
+    gulp.dest(dest)
+  ],
+  () => cleanup()
+);
+
+gulp.task(
+  'compile',
+  () => execFile(
+    `${__dirname}/compileTS.sh`,
+    [ `${src}/*.ts`, intermediate ],
+    (error, stdout, stderr) => {
+      // if (error) console.log(error);
+
+      // NOTE: `./intermediate` will still exist if compile failed. Good visual cue in editor.
+      stdout.length > 0 ? console.log(stdout) : minify()
+    }
+  )
+);
+
+gulp.task('default', [ 'build', 'compile' ], () => {
+	gulp.watch(goFiles, [ 'build' ]);
+	gulp.watch([ `${src}/*.ts` ], [ 'compile' ]);
+});
