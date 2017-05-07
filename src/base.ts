@@ -1,12 +1,12 @@
-(() => {
+(function() : void {
   let menuOpen : boolean = false;
 
-  const menuButtonClick : () => void = () => {
-    const bottom = document.getElementById('menu-bottom');
-    const header = document.getElementById('header');
-    const middle = document.getElementById('menu-middle');
-    const top = document.getElementById('menu-top');
-    const nav = document.getElementById('nav-menu');
+  const menuButtonClick = function() : void {
+    const bottom : HTMLElement = document.getElementById('menu-bottom');
+    const header : HTMLElement = document.getElementById('header');
+    const middle : HTMLElement = document.getElementById('menu-middle');
+    const top : HTMLElement = document.getElementById('menu-top');
+    const nav : HTMLElement = document.getElementById('nav-menu');
 
     if (menuOpen) {
       bottom.className = 'menu-bottom-bar menu-bar-flat';
@@ -25,7 +25,7 @@
     }
   }
 
-  const menuButton = document.getElementById('menu-button');
+  const menuButton : HTMLElement = document.getElementById('menu-button');
 
   menuButton.addEventListener('click', menuButtonClick);
 })();

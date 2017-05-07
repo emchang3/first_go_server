@@ -2,10 +2,10 @@
 go_server
 
 # Node Modules
-node_modules
+/node_modules/
 
 # Content
-content
+/content/
 
 # Environment Variables
 .env
@@ -14,5 +14,7 @@ content
 
 material.min.js
 material.min.css
+
+# OSX Finder Bullshit
 
 .DS_Store
