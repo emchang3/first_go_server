@@ -46,9 +46,10 @@ h6 {
   font-size: 18px;
 }
 
-p {
+p, ul {
   line-height: 18px;
   margin-bottom: 8px;
+  margin-top: 0px;
   padding-bottom: 8px;
 }
 

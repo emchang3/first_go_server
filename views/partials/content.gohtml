@@ -26,6 +26,18 @@
       {{ else if eq $firstWord "^css" }}
         {{ $styleURL := index $words 1 }}
         <link rel="stylesheet" href="{{ $styleURL }}">
+      {{ else if eq $firstWord "^ul" }}
+        <ul>
+      {{ else if eq $firstWord "^li" }}
+        <li>
+          {{ range $i, $word := $words }}
+            {{ if gt $i 0 }}
+              {{ $word }}
+            {{ end }}
+          {{ end }}
+        </li>
+      {{ else if eq $firstWord "ul$" }}
+        </ul>
       {{ else }}
         {{ $musplit := call $.Split $element "`" }}
         <p>
