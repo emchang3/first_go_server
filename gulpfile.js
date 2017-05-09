@@ -81,11 +81,7 @@ gulp.task('destroy', destroy);
 const cleanup = () => execFile(`${__dirname}/removeIntermediate.sh`, [ intermediate ]);
 
 const minify = () => pump(
-  [
-    gulp.src(`${intermediate}/*.js`),
-    uglify(),
-    gulp.dest(jsdest)
-  ],
+  [ gulp.src(`${intermediate}/*.js`), uglify(), gulp.dest(jsdest) ],
   () => cleanup()
 );
 
@@ -102,18 +98,12 @@ const compileTS = () => execFile(
 
 gulp.task('compile', compileTS);
 
-gulp.task('shrinkCSS', () => {
-	pump(
-		[
-			gulp.src(cssFiles),
-			cleanCSS(),
-			gulp.dest(cssdest)
-		]
-	);
-});
+const shrink = () => pump([ gulp.src(cssFiles), cleanCSS(), gulp.dest(cssdest) ]);
 
-gulp.task('default', [ 'build', 'compile', 'shrinkCSS' ], () => {
+gulp.task('shrink', shrink);
+
+gulp.task('default', [ 'build', 'compile', 'shrink' ], () => {
 	gulp.watch(goFiles, [ 'build' ]);
 	gulp.watch(tsFiles, [ 'compile' ]);
-	gulp.watch(cssFiles, [ 'shrinkCSS' ]);
+	gulp.watch(cssFiles, [ 'shrink' ]);
 });
