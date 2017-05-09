@@ -7,7 +7,6 @@ import (
 
 	"github.com/NYTimes/gziphandler"
 	"github.com/joho/godotenv"
-	// "net/url"
 )
 
 func routeHandler() {
