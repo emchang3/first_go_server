@@ -5,10 +5,17 @@ const execFile = require('child_process').execFile;
 const gulp = require('gulp');
 const uglify = require('gulp-uglify');
 const pump = require('pump');
+const cleanCSS = require('gulp-clean-css');
 
-const src = `${__dirname}/src`;
+const tssrc = `${__dirname}/src`;
 const intermediate = `${__dirname}/intermediate`;
-const dest = `${__dirname}/public/scripts`;
+const jsdest = `${__dirname}/public/scripts`;
+const tsFiles = `${tssrc}/*.ts`;
+
+const csssrc = `${__dirname}/src/styles`;
+const cssdest = `${__dirname}/public/styles`;
+const cssFiles = `${csssrc}/*.css`;
+
 const goFiles = './*.go';
 
 const platform = process.platform === 'darwin' ? 'osx' : 'ubuntu'
@@ -28,7 +35,6 @@ const started = () => execFile(
 		if (stderr) console.log('sd_stderr:', stderr);
 	}
 );
-
 
 const build = () => execFile(
 	`${__dirname}/shell_ops_${platform}.sh`,
@@ -78,26 +84,36 @@ const minify = () => pump(
   [
     gulp.src(`${intermediate}/*.js`),
     uglify(),
-    gulp.dest(dest)
+    gulp.dest(jsdest)
   ],
   () => cleanup()
 );
 
-gulp.task(
-  'compile',
-  () => execFile(
-    `${__dirname}/compileTS.sh`,
-    [ `${src}/*.ts`, intermediate ],
-    (error, stdout, stderr) => {
-      // if (error) console.log(error);
+const compileTS = () => execFile(
+	`${__dirname}/compileTS.sh`,
+	[ tsFiles, intermediate ],
+	(error, stdout, stderr) => {
+		// if (error) console.log(error);
 
-      // NOTE: `./intermediate` will still exist if compile failed. Good visual cue in editor.
-      stdout.length > 0 ? console.log(stdout) : minify()
-    }
-  )
+		// NOTE: `./intermediate` will still exist if compile failed. Good visual cue in editor.
+		stdout.length > 0 ? console.log(stdout) : minify()
+	}
 );
 
-gulp.task('default', [ 'build', 'compile' ], () => {
+gulp.task('compile', compileTS);
+
+gulp.task('shrinkCSS', () => {
+	pump(
+		[
+			gulp.src(cssFiles),
+			cleanCSS(),
+			gulp.dest(cssdest)
+		]
+	);
+});
+
+gulp.task('default', [ 'build', 'compile', 'shrinkCSS' ], () => {
 	gulp.watch(goFiles, [ 'build' ]);
-	gulp.watch([ `${src}/*.ts` ], [ 'compile' ]);
+	gulp.watch(tsFiles, [ 'compile' ]);
+	gulp.watch(cssFiles, [ 'shrinkCSS' ]);
 });
