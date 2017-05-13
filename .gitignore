@@ -1,5 +1,6 @@
 # Executable
 go_server
+first_go_server
 
 # Node Modules
 /node_modules/
