@@ -41,25 +41,35 @@
       {{ else }}
         {{ $musplit := call $.Split $element "`" }}
         <p>
-          {{ range $i, $word := $musplit }}
-            {{ if eq $word "^c" }}<code>
-            {{ else if eq $word "c$" }}</code>
-            {{ else if eq $word "^e" }}<em>
-            {{ else if eq $word "e$" }}</em>
-            {{ else if eq $word "^s" }}<strong>
-            {{ else if eq $word "s$" }}</strong>
-            {{ else if eq $word "^c-r" }}<span class="red">
-            {{ else if eq $word "c-r$" }}</span>
-            {{ else if eq $word "^c-t" }}<span class="teal">
-            {{ else if eq $word "c-t$" }}</span>
-            {{ else if eq $word "^c-i" }}<span class="indigo">
-            {{ else if eq $word "c-i$" }}</span>
-            {{ else if eq $word "^c-g" }}<span class="grey">
-            {{ else if eq $word "c-g$" }}</span>
-            {{ else if eq $word "n$" }}<br />
+          {{ range $i, $part := $musplit }}
+            {{ if eq $part "^c" }}<code>
+            {{ else if eq $part "c$" }}</code>
+            {{ else if eq $part "^e" }}<em>
+            {{ else if eq $part "e$" }}</em>
+            {{ else if eq $part "^s" }}<strong>
+            {{ else if eq $part "s$" }}</strong>
+            {{ else if eq $part "^c-r" }}<span class="red">
+            {{ else if eq $part "c-r$" }}</span>
+            {{ else if eq $part "^c-t" }}<span class="teal">
+            {{ else if eq $part "c-t$" }}</span>
+            {{ else if eq $part "^c-i" }}<span class="indigo">
+            {{ else if eq $part "c-i$" }}</span>
+            {{ else if eq $part "^c-g" }}<span class="grey">
+            {{ else if eq $part "c-g$" }}</span>
+            {{ else if eq $part "n$" }}<br />
             {{ else }}
-              {{ if ne $word "" }}
-                {{ $word }}
+              {{ if ne $part "" }}
+                {{ $wrds := call $.Split $part " " }}
+                {{ range $j, $wrd := $wrds }}
+                  {{ $letters := call $.Split $wrd "" }}
+                  {{ $firstLetter := index $letters 0 }}
+                  {{ if ne $firstLetter "@" }}
+                    {{ $wrd }}
+                  {{ else }}
+                    {{ $linkParts := call $.Split $wrd "|" }}
+                    <a href="{{ index $linkParts 1 }}" target="_blank">{{ index $linkParts 2 }}</a>
+                  {{ end }}
+                {{ end }}
               {{ end }}
             {{ end }}
           {{ end }}
