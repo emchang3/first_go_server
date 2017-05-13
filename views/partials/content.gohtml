@@ -61,13 +61,17 @@
               {{ if ne $part "" }}
                 {{ $wrds := call $.Split $part " " }}
                 {{ range $j, $wrd := $wrds }}
-                  {{ $letters := call $.Split $wrd "" }}
-                  {{ $firstLetter := index $letters 0 }}
-                  {{ if ne $firstLetter "@" }}
-                    {{ $wrd }}
-                  {{ else }}
+                  {{ if ne $wrd "" }}
+                    {{ $letters := call $.Split $wrd "" }}
+                    {{ $firstLetter := index $letters 0 }}
+                    {{ if eq $firstLetter "@" }}
                     {{ $linkParts := call $.Split $wrd "|" }}
-                    <a href="{{ index $linkParts 1 }}" target="_blank">{{ index $linkParts 2 }}</a>
+                      <a href="{{ index $linkParts 1 }}" target="_blank">
+                        {{ index $linkParts 2 }}
+                      </a>
+                    {{ else }}
+                      {{ $wrd }}
+                    {{ end }}
                   {{ end }}
                 {{ end }}
               {{ end }}

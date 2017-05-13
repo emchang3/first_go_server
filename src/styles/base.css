@@ -235,4 +235,11 @@ a:hover {
   transition: left 0.5s, opacity 0.5s;
   -webkit-transition: left 0.5s, opacity 0.5s;
 }
+
+.nav-p {
+  padding-left: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /* end */
