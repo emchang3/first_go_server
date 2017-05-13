@@ -11,7 +11,9 @@ import (
 
 func routeHandler() {
 	fs := http.FileServer(http.Dir("public"))
-	http.Handle("/public/", http.StripPrefix("/public/", fs))
+	nopref := http.StripPrefix("/public/", fs)
+	filesGz := gziphandler.GzipHandler(nopref)
+	http.Handle("/public/", filesGz)
 
 	indexGz := gziphandler.GzipHandler(http.HandlerFunc(index))
 	postGz := gziphandler.GzipHandler(http.HandlerFunc(contentPost))
