@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"fmt"
 	"log"
 	"net/http"
@@ -42,23 +41,9 @@ func main() {
 	port := getPort()
 	fmt.Printf("\n--- Listening:%v\n\n", port)
 
-	if port != ":80" {
-		// log.Fatal(http.ListenAndServe(port, nil))
+	if port != ":443" {
 		log.Fatal(http.ListenAndServeTLS(port, "cert.pem", "key.pem", nil))
 	} else {
-		cfg := &tls.Config{
-			MinVersion:               tls.VersionTLS12,
-			CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
-			PreferServerCipherSuites: true,
-			CipherSuites: []uint16{
-				tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
-				tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-			},
-		}
-		srv := &http.Server{
-			Addr:      port,
-			Handler:   nil,
-			TLSConfig: cfg}
-		log.Fatal(srv.ListenAndServeTLS("jnsq-bundle.pem", "jnsq.ninja.pem"))
+		log.Fatal(http.ListenAndServeTLS(port, "jnsq-bundle.pem", "jnsq.ninja.pem", nil))
 	}
 }
