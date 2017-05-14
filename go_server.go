@@ -39,11 +39,12 @@ func main() {
 	routeHandler()
 
 	port := getPort()
-	fmt.Printf("\n--- Listening on: %v\n\n", port)
+	fmt.Printf("\n--- Listening:%v\n\n", port)
 
 	if port != ":80" {
 		log.Fatal(http.ListenAndServe(port, nil))
 	} else {
-		log.Fatal(http.ListenAndServeTLS(port, "jnsq-bundle.crt", "jnsq.ninja.key", nil))
+		fmt.Println("WHY")
+		log.Fatal(http.ListenAndServeTLS(port, "jnsq-bundle.pem", "jnsq.ninja.pem", nil))
 	}
 }
