@@ -19,3 +19,11 @@ material.min.css
 # OSX Finder Bullshit
 
 .DS_Store
+
+# SSL
+
+*.key
+*.csr
+*.pem
+*.cert
+*.txt

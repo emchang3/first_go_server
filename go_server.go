@@ -15,12 +15,18 @@ func routeHandler() {
 	filesGz := gziphandler.GzipHandler(nopref)
 	http.Handle("/public/", filesGz)
 
+	http.Handle("/432FB6766878ED13CC007C095B54B76A.txt", http.HandlerFunc(fs2))
+
 	indexGz := gziphandler.GzipHandler(http.HandlerFunc(index))
 	postGz := gziphandler.GzipHandler(http.HandlerFunc(contentPost))
 
 	http.Handle("/", indexGz)
 	http.Handle("/post/", postGz)
 	http.HandleFunc("/submit", receiveContent)
+}
+
+func fs2(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "432FB6766878ED13CC007C095B54B76A.txt")
 }
 
 func main() {
