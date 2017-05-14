@@ -41,9 +41,7 @@ func main() {
 	port := getPort()
 	fmt.Printf("\n--- Listening:%v\n\n", port)
 
-	if port != ":443" {
-		log.Fatal(http.ListenAndServeTLS(port, "cert.pem", "key.pem", nil))
-	} else {
-		log.Fatal(http.ListenAndServeTLS(port, "jnsq-bundle.pem", "jnsq.ninja.pem", nil))
-	}
+	cert, key := getCreds()
+
+	log.Fatal(http.ListenAndServeTLS(port, cert, key, nil))
 }
