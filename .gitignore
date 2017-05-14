@@ -24,6 +24,6 @@ material.min.css
 
 *.key
 *.csr
-*.pem
-*.cert
-*.txt
+# *.pem
+*.crt
+# *.txt
