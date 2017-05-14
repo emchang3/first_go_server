@@ -2,8 +2,14 @@ body, html {
   font-family: Roboto, sans-serif;
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  overflow: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
