@@ -15,7 +15,8 @@ func routeHandler() {
 	filesGz := gziphandler.GzipHandler(nopref)
 	http.Handle("/public/", filesGz)
 
-	http.Handle("/432FB6766878ED13CC007C095B54B76A.txt", http.HandlerFunc(fs2))
+	activatorGz := gziphandler.GzipHandler(http.HandlerFunc(fs2))
+	http.Handle("/432FB6766878ED13CC007C095B54B76A.txt", activatorGz)
 
 	indexGz := gziphandler.GzipHandler(http.HandlerFunc(index))
 	postGz := gziphandler.GzipHandler(http.HandlerFunc(contentPost))
