@@ -1,0 +1,20 @@
+{{ define "navArrows" }}
+  {{ if ne .Current .Latest }}
+    <div id="forward-arrow">
+      <a href="/post/{{ call .Add .Current 1 }}">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+          <i class="material-icons">arrow_forward</i>
+        </button>
+      </a>
+    </div>
+  {{ end }}
+  {{ if ne .Current 1 }}
+    <div id="back-arrow">
+      <a href="/post/{{ call .Subtract .Current 1 }}">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+          <i class="material-icons">arrow_back</i>
+        </button>
+      </a>
+    </div>
+  {{ end }}
+{{ end }}

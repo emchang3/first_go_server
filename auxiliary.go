@@ -15,10 +15,22 @@ type link struct {
 }
 
 type page struct {
-	Title string
-	Body  []string
-	Pages []link
-	Split func(string, string) []string
+	Title    string
+	Body     []string
+	Current  int
+	Latest   int
+	Pages    []link
+	Split    func(string, string) []string
+	Add      func(int, int) int
+	Subtract func(int, int) int
+}
+
+func add(a int, b int) int {
+	return a + b
+}
+
+func subtract(a int, b int) int {
+	return a - b
 }
 
 func getLatestFile() (int, error) {
@@ -95,7 +107,7 @@ func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Reques
 	}
 	// fmt.Println(pages)
 
-	p := &page{Title: title, Body: body, Pages: pages, Split: strings.Split}
+	p := &page{Title: title, Body: body, Current: file, Latest: latest, Pages: pages, Split: strings.Split, Add: add, Subtract: subtract}
 
 	tmplt := ""
 	if isIndex {
@@ -104,7 +116,7 @@ func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Reques
 		tmplt = "views/post.gohtml"
 	}
 
-	t, err := template.ParseFiles(tmplt, "views/partials/content.gohtml", "views/partials/menuButton.gohtml", "views/partials/navMenu.gohtml")
+	t, err := template.ParseFiles(tmplt, "views/partials/content.gohtml", "views/partials/menuButton.gohtml", "views/partials/navMenu.gohtml", "views/partials/navArrows.gohtml")
 	if err != nil {
 		return err
 	}

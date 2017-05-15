@@ -15,10 +15,12 @@
       {{ template "menuButton" . }}
       <h1><a href="/">jnsq</a></h1>
     </div>
+    {{ template "navArrows" . }}
     {{ template "navMenu" . }}
     <div id="main">
       {{ template "content" . }}
     </div>
+    <script type="text/javascript" src="../public/scripts/material.min.js"></script>
     <script type="text/javascript" src="../public/scripts/base.js"></script>
   </body>
 </html>

@@ -1,9 +1,7 @@
 {{ define "navMenu" }}
   <div class="nav-menu-closed mdl-shadow--16dp" id="nav-menu">
-    <h6 style="margin-top: 0px;">
-      Content
-    </h6>
-    <div style="padding-top: 8px;">
+    <h6 class="nav-section-header">Content</h6>
+    <div id="nav-content">
       {{ range $page := .Pages }}
         <p class="nav-p">
           <a href="/post/{{ $page.File }}">
@@ -12,5 +10,6 @@
         </p>
       {{ end }}
     </div>
+    <h6 class="nav-section-header">About</h6>
   </div>
 {{ end }}

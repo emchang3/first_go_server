@@ -4,6 +4,10 @@
 	"GodepVersion": "v79",
 	"Deps": [
 		{
+			"ImportPath": "github.com/NYTimes/gziphandler",
+			"Rev": "22d4470af89e09998fc16b35029df973932df4ae"
+		},
+		{
 			"ImportPath": "github.com/joho/godotenv",
 			"Comment": "v1.1-12-g325433c",
 			"Rev": "325433c502d409f3c3dc820098fb0cfe38d98dc7"
