@@ -120,14 +120,16 @@ a:hover {
 
 .header-original {
   left: 0px;
-  transition: left 0.5s;
-  -webkit-transition: left 0.5s;
+  opacity: 1;
+  transition: left 0.5s, opacity 0.5s;
+  -webkit-transition: left 0.5s, opacity 0.5s;
 }
 
 .header-shifted {
   left: 247px;
-  transition: left 0.5s;
-  -webkit-transition: left 0.5s;
+  opacity: 0.9;
+  transition: left 0.5s, opacity 0.5s;
+  -webkit-transition: left 0.5s, opacity 0.5s;
 }
 
 #main {
