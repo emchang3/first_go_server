@@ -14,13 +14,13 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, err := getLatestFile()
+	file, err := getLatestPost()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = loadContentPost(file, file, w, r, true)
+	err = loadContent(file, file, w, r, true)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -33,13 +33,13 @@ func about(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, err := getLatestFile()
+	file, err := getLatestPost()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = loadAbout("about", file, w, r)
+	err = loadSpecial("about", file, w, r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -54,13 +54,13 @@ func contentPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, err := getLatestFile()
+	file, err := getLatestPost()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = loadContentPost(this, file, w, r, false)
+	err = loadContent(this, file, w, r, false)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

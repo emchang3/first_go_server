@@ -40,7 +40,7 @@ func subtract(a int, b int) int {
 	return a - b
 }
 
-func getLatestFile() (int, error) {
+func getLatestPost() (int, error) {
 	dirname := "content"
 	contents, err := ioutil.ReadDir(dirname)
 	if err != nil {
@@ -63,7 +63,7 @@ func getLatestFile() (int, error) {
 	return latest, nil
 }
 
-func getPost(file int) (string, []string, error) {
+func getContent(file int) (string, []string, error) {
 	myFile := strconv.Itoa(file)
 	filename := "content/" + myFile + ".emc"
 
@@ -118,10 +118,10 @@ func getSpecial(file string) (string, []string, error) {
 	return title, body, err
 }
 
-func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Request, isIndex bool) error {
+func loadContent(file int, latest int, w http.ResponseWriter, r *http.Request, isIndex bool) error {
 	// fmt.Println(file, latest)
 
-	title, body, err := getPost(file)
+	title, body, err := getContent(file)
 	if err != nil {
 		return err
 	}
@@ -129,7 +129,7 @@ func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Reques
 	pages := make([]link, 0)
 	current := latest
 	for current > 0 {
-		currentTitle, _, err := getPost(current)
+		currentTitle, _, err := getContent(current)
 		if err != nil {
 			return err
 		}
@@ -159,7 +159,7 @@ func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Reques
 	return nil
 }
 
-func loadAbout(file string, latest int, w http.ResponseWriter, r *http.Request) error {
+func loadSpecial(file string, latest int, w http.ResponseWriter, r *http.Request) error {
 	// fmt.Println(file, latest)
 
 	title, body, err := getSpecial(file)
@@ -170,7 +170,7 @@ func loadAbout(file string, latest int, w http.ResponseWriter, r *http.Request) 
 	pages := make([]link, 0)
 	current := latest
 	for current > 0 {
-		currentTitle, _, err := getPost(current)
+		currentTitle, _, err := getContent(current)
 		if err != nil {
 			return err
 		}
@@ -184,7 +184,7 @@ func loadAbout(file string, latest int, w http.ResponseWriter, r *http.Request) 
 
 	p := &special{Title: title, Body: body, Pages: pages, Split: strings.Split}
 
-	tmplt := "views/about.gohtml"
+	tmplt := "views/special.gohtml"
 
 	t, err := template.ParseFiles(tmplt, "views/partials/content.gohtml", "views/partials/menuButton.gohtml", "views/partials/navMenu.gohtml")
 	if err != nil {
