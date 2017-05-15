@@ -25,6 +25,13 @@ type page struct {
 	Subtract func(int, int) int
 }
 
+type special struct {
+	Title string
+	Body  []string
+	Pages []link
+	Split func(string, string) []string
+}
+
 func add(a int, b int) int {
 	return a + b
 }
@@ -84,6 +91,33 @@ func getPost(file int) (string, []string, error) {
 	return title, body, err
 }
 
+func getSpecial(file string) (string, []string, error) {
+	filename := "special/" + file + ".emc"
+
+	body := make([]string, 0)
+
+	raw, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return "", body, err
+	}
+
+	myBody := fmt.Sprintf("%s", raw)
+	bodySplit := strings.Split(myBody, "\n")
+
+	title := ""
+	for _, v := range bodySplit {
+		if strings.Split(v, " ")[0] == "^t" {
+			title = strings.Join(strings.Split(v, " ")[1:], " ")
+			continue
+		}
+		if v != "" {
+			body = append(body, v)
+		}
+	}
+
+	return title, body, err
+}
+
 func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Request, isIndex bool) error {
 	// fmt.Println(file, latest)
 
@@ -117,6 +151,42 @@ func loadContentPost(file int, latest int, w http.ResponseWriter, r *http.Reques
 	}
 
 	t, err := template.ParseFiles(tmplt, "views/partials/content.gohtml", "views/partials/menuButton.gohtml", "views/partials/navMenu.gohtml", "views/partials/navArrows.gohtml")
+	if err != nil {
+		return err
+	}
+
+	t.Execute(w, p)
+	return nil
+}
+
+func loadAbout(file string, latest int, w http.ResponseWriter, r *http.Request) error {
+	// fmt.Println(file, latest)
+
+	title, body, err := getSpecial(file)
+	if err != nil {
+		return err
+	}
+
+	pages := make([]link, 0)
+	current := latest
+	for current > 0 {
+		currentTitle, _, err := getPost(current)
+		if err != nil {
+			return err
+		}
+		// fmt.Println(currentTitle)
+
+		currentLink := link{Title: currentTitle, File: strconv.Itoa(current)}
+		pages = append(pages, currentLink)
+		current--
+	}
+	// fmt.Println(pages)
+
+	p := &special{Title: title, Body: body, Pages: pages, Split: strings.Split}
+
+	tmplt := "views/about.gohtml"
+
+	t, err := template.ParseFiles(tmplt, "views/partials/content.gohtml", "views/partials/menuButton.gohtml", "views/partials/navMenu.gohtml")
 	if err != nil {
 		return err
 	}

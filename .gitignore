@@ -7,6 +7,7 @@ first_go_server
 
 # Content
 /content/
+/special/
 
 # Environment Variables
 .env

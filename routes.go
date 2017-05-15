@@ -27,6 +27,25 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func about(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/about" {
+		http.NotFound(w, r)
+		return
+	}
+
+	file, err := getLatestFile()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = loadAbout("about", file, w, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
 func contentPost(w http.ResponseWriter, r *http.Request) {
 	secondary := strings.Split(r.URL.Path, "/")[2]
 	this, err := strconv.Atoi(secondary)

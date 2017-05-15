@@ -20,10 +20,12 @@ func routeHandler() {
 
 	indexGz := gziphandler.GzipHandler(http.HandlerFunc(index))
 	postGz := gziphandler.GzipHandler(http.HandlerFunc(contentPost))
+	aboutGz := gziphandler.GzipHandler(http.HandlerFunc(about))
 
 	http.Handle("/", indexGz)
 	http.Handle("/post/", postGz)
 	http.HandleFunc("/submit", receiveContent)
+	http.Handle("/about", aboutGz)
 }
 
 // func fs2(w http.ResponseWriter, r *http.Request) {
