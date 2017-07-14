@@ -25,7 +25,8 @@ func routeHandler() {
 	http.Handle("/", indexGz)
 	http.Handle("/post/", postGz)
 	http.HandleFunc("/submit", receiveContent)
-	http.Handle("/about", aboutGz)
+	http.Handle("/site-and-author", aboutGz)
+	http.Handle("/contact", aboutGz)
 }
 
 // func fs2(w http.ResponseWriter, r *http.Request) {

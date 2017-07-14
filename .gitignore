@@ -28,3 +28,7 @@ material.min.css
 *.pem
 *.crt
 # *.txt
+
+# SSH
+
+ssh.exp

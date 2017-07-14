@@ -28,7 +28,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func about(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/about" {
+	fmt.Println(r.URL.Path)
+	if r.URL.Path != "/contact" && r.URL.Path != "/site-and-author" {
 		http.NotFound(w, r)
 		return
 	}
@@ -39,11 +40,20 @@ func about(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = loadSpecial("about", file, w, r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	if r.URL.Path == "/contact" {
+		err = loadSpecial("contact", file, w, r)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	} else {
+		err = loadSpecial("about", file, w, r)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
+
 }
 
 func contentPost(w http.ResponseWriter, r *http.Request) {

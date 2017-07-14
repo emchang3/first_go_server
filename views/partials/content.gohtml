@@ -65,10 +65,17 @@
                     {{ $letters := call $.Split $wrd "" }}
                     {{ $firstLetter := index $letters 0 }}
                     {{ if eq $firstLetter "@" }}
-                    {{ $linkParts := call $.Split $wrd "|" }}
+                      {{ $linkParts := call $.Split $wrd "|" }}
                       <a href="{{ index $linkParts 1 }}" target="_blank">
                         {{ index $linkParts 2 }}
                       </a>
+                    {{ else if eq $firstLetter "標" }}
+                      {{ $iconParts := call $.Split $wrd "|" }}
+                      <i
+                        class="fa {{ index $iconParts 1 }} {{ index $iconParts 2 }}"
+                        aria-hidden="true"
+                      >
+                      </i>
                     {{ else }}
                       {{ $wrd }}
                     {{ end }}
