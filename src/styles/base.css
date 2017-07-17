@@ -242,14 +242,16 @@ a:hover {
 
 .nav-menu-closed {
   left: -247px;
-  transition: left 0.5s;
-  -webkit-transition: left 0.5s;
+  opacity: 0;
+  transition: left 0.5s, opacity 0.5s;
+  -webkit-transition: left 0.5s, opacity 0.5s;
 }
 
 .nav-menu-open {
   left: 0px;
-  transition: left 0.5s;
-  -webkit-transition: left 0.5s;
+  opacity: 1;
+  transition: left 0.5s, opacity 0.5s;
+  -webkit-transition: left 0.5s, opacity 0.5s;
 }
 
 .nav-p {
