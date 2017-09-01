@@ -126,7 +126,7 @@ a:hover {
 }
 
 .header-shifted {
-  left: 247px;
+  left: 232px;
   opacity: 0.9;
   transition: left 0.5s, opacity 0.5s;
   -webkit-transition: left 0.5s, opacity 0.5s;
@@ -227,7 +227,7 @@ a:hover {
   top: 0px;
   padding: 16px;
   position: fixed;
-  width: 215px;
+  width: 200px;
 }
 
 .nav-section-header {
