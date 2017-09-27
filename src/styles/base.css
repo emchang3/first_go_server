@@ -260,6 +260,10 @@ a:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+#about {
+  padding-top: 8px;
+}
 /* end */
 
 .arrows {
