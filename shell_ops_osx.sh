@@ -18,7 +18,7 @@ build() {
 }
 
 start() {
-  ./go_server
+  ./first_go_server
 }
 
 started() {

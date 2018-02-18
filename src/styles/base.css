@@ -116,6 +116,7 @@ a:hover {
   padding-left: 24px;
   position: fixed;
   width: 100%;
+  z-index: 50;
 }
 
 .header-original {
@@ -228,6 +229,7 @@ a:hover {
   padding: 16px;
   position: fixed;
   width: 200px;
+  z-index: 100;
 }
 
 .nav-section-header {

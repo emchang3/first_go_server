@@ -23,6 +23,7 @@ type page struct {
 	Split    func(string, string) []string
 	Add      func(int, int) int
 	Subtract func(int, int) int
+	Url      string
 }
 
 type special struct {
@@ -30,6 +31,7 @@ type special struct {
 	Body  []string
 	Pages []link
 	Split func(string, string) []string
+	Url   string
 }
 
 func add(a int, b int) int {
@@ -141,7 +143,7 @@ func loadContent(file int, latest int, w http.ResponseWriter, r *http.Request, i
 	}
 	// fmt.Println(pages)
 
-	p := &page{Title: title, Body: body, Current: file, Latest: latest, Pages: pages, Split: strings.Split, Add: add, Subtract: subtract}
+	p := &page{Title: title, Body: body, Current: file, Latest: latest, Pages: pages, Split: strings.Split, Add: add, Subtract: subtract, Url: r.URL.Path}
 
 	tmplt := ""
 	if isIndex {
@@ -182,7 +184,7 @@ func loadSpecial(file string, latest int, w http.ResponseWriter, r *http.Request
 	}
 	// fmt.Println(pages)
 
-	p := &special{Title: title, Body: body, Pages: pages, Split: strings.Split}
+	p := &special{Title: title, Body: body, Pages: pages, Split: strings.Split, Url: r.URL.Path}
 
 	tmplt := "views/special.gohtml"
 

@@ -13,19 +13,38 @@
             {{ end }}
           {{ end }}
         </h{{ $number }}>
+      {{ else if eq $firstWord "^bq" }}
+        <blockquote>
+      {{ else if eq $firstWord "bq$" }}
+        </blockquote>
       {{ else if eq $firstWord "^cb" }}
         <div class="code code-block">
       {{ else if eq $firstWord "cb$" }}
         </div>
-      {{ else if eq $firstWord "^te" }}
+      {{ else if eq $firstWord "^+e" }}
         {{ $targetElement := index $words 1 }}
-        <div id="{{ $targetElement }}"></div>
+        {{ $attrs := call $.Split $targetElement "|" }}
+        <div id="{{ index $attrs 0 }}" class="{{ index $attrs 1 }}">
+      {{ else if eq $firstWord "+e$" }}
+        </div>
       {{ else if eq $firstWord "^js" }}
         {{ $scriptURL := index $words 1 }}
-        <script type="text/javascript" src="{{ $scriptURL }}"></script>
+        {{ $urlsplit := call $.Split $.Url "/" }}
+        {{ $bucket := index $urlsplit 1 }}
+        {{ if eq $bucket "post" }}
+          <script type="text/javascript" src="../{{ $scriptURL }}"></script>
+        {{ else }}
+          <script type="text/javascript" src="{{ $scriptURL }}"></script>
+        {{ end }}
       {{ else if eq $firstWord "^css" }}
         {{ $styleURL := index $words 1 }}
-        <link rel="stylesheet" href="{{ $styleURL }}">
+        {{ $urlsplit := call $.Split $.Url "/" }}
+        {{ $bucket := index $urlsplit 1 }}
+        {{ if eq $bucket "post" }}
+          <link rel="stylesheet" href="../{{ $styleURL }}">
+        {{ else }}
+          <link rel="stylesheet" href="{{ $styleURL }}">
+        {{ end }}
       {{ else if eq $firstWord "^ul" }}
         <ul>
       {{ else if eq $firstWord "^li" }}
